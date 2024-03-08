@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiniIntern</title>
+  <style>
+    /* CSS 코드는 생략합니다. */
+    #message {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .message-content {
+      background-color: #f2f2f2;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
+    }
+
+    .grid-item {
+      background-color: #ccc;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <button onclick="showMessage('미니')">미니</button>
+    <button onclick="showMessage('미니인턴')">미니인턴</button>
+    <button onclick="showMessage('스킬업')">스킬업</button>
+    <button onclick="showMessage('M클래스')">M클래스</button>
+    <button onclick="showMessage('해피폴리오')">해피폴리오</button>
+  </main>
+
+  <div id="message"></div>
+
+  <script>
+    function showMessage(buttonName) {
+      var message = "";
+      switch(buttonName) {
+        case '미니':
+          message = "<div class='message-content grid-container'>";
+          for (var i = 1; i <= 4; i++) {
+            message += "<div class='grid-item'>미니 창 " + i + "</div>";
+          }
+          message += "</div>";
+          break;
+        case '미니인턴':
+          message = "<div class='message-content grid-container'>";
+          for (var i = 1; i <= 4; i++) {
+            message += "<div class='grid-item'>미니인턴 창 " + i + "</div>";
+          }
+          message += "</div>";
+          break;
+        case '스킬업':
+          message = "<div class='message-content grid-container'>";
+          for (var i = 1; i <= 4; i++) {
+            message += "<div class='grid-item'>스킬업 창 " + i + "</div>";
+          }
+          message += "</div>";
+          break;
+        case 'M클래스':
+          message = "<div class='message-content grid-container'>";
+          for (var i = 1; i <= 4; i++) {
+            message += "<div class='grid-item'>M클래스 창 " + i + "</div>";
+          }
+          message += "</div>";
+          break;
+        case '해피폴리오':
+          message = "<div class='message-content grid-container'>";
+          for (var i = 1; i <= 4; i++) {
+            message += "<div class='grid-item'>해피폴리오 창 " + i + "</div>";
+          }
+          message += "</div>";
+          break;
+        default:
+          message = "<div class='message-content'><h1>해당하는 정보가 없습니다.</h1></div>";
+      }
+      document.getElementById("message").innerHTML = message;
+      document.getElementById("message").style.display = "block";
+    }
+  </script>
+</body>
+</html>
