@@ -3,91 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MiniIntern</title>
+  <title>MiniIntern캐러셀</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
-    /* CSS 코드는 생략합니다. */
     #message {
       display: none;
       text-align: center;
-      padding: 20px;
+      padding: 100px;
     }
-
     .message-content {
       background-color: #f2f2f2;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 100px;
+      border-radius: 100px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
-
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 10fr);
       grid-gap: 10px;
     }
-
     .grid-item {
       background-color: #ccc;
-      padding: 20px;
+      padding: 20px; 
       text-align: center;
+      position: relative;
     }
+    .grid-item .fa {
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      font-size: 80px; 
+    }
+
+    main {
+      display: flex;
+      flex-direction: row; /* 버튼들을 수평으로 정렬 */
+    }
+
+    button {
+      background-color: white;
+      border: none;
+      padding: 2px 4px;
+      margin: 2px; 
+      width: 500px; 
+      height: 50px; 
+    }
+
+    button:nth-child(n+2) {
+      margin-left: 20px;
+    }
+
   </style>
 </head>
 <body>
   <main>
-    <button onclick="showMessage('미니')">미니</button>
+    <button id="prevBtn" onclick="prevButton()">◀</button>
+    <button onclick="showMessage('미니')">MiniIntern</button>
     <button onclick="showMessage('미니인턴')">미니인턴</button>
     <button onclick="showMessage('스킬업')">스킬업</button>
     <button onclick="showMessage('M클래스')">M클래스</button>
+    <button onclick="showMessage('채용관')">채용관</button>
     <button onclick="showMessage('해피폴리오')">해피폴리오</button>
+    <button id="nextBtn" onclick="nextButton()">▶</button>
   </main>
 
   <div id="message"></div>
 
   <script>
-    function showMessage(buttonName) {
-      var message = "";
-      switch(buttonName) {
-        case '미니':
-          message = "<div class='message-content grid-container'>";
-          for (var i = 1; i <= 4; i++) {
-            message += "<div class='grid-item'>미니 창 " + i + "</div>";
-          }
-          message += "</div>";
-          break;
-        case '미니인턴':
-          message = "<div class='message-content grid-container'>";
-          for (var i = 1; i <= 4; i++) {
-            message += "<div class='grid-item'>미니인턴 창 " + i + "</div>";
-          }
-          message += "</div>";
-          break;
-        case '스킬업':
-          message = "<div class='message-content grid-container'>";
-          for (var i = 1; i <= 4; i++) {
-            message += "<div class='grid-item'>스킬업 창 " + i + "</div>";
-          }
-          message += "</div>";
-          break;
-        case 'M클래스':
-          message = "<div class='message-content grid-container'>";
-          for (var i = 1; i <= 4; i++) {
-            message += "<div class='grid-item'>M클래스 창 " + i + "</div>";
-          }
-          message += "</div>";
-          break;
-        case '해피폴리오':
-          message = "<div class='message-content grid-container'>";
-          for (var i = 1; i <= 4; i++) {
-            message += "<div class='grid-item'>해피폴리오 창 " + i + "</div>";
-          }
-          message += "</div>";
-          break;
-        default:
-          message = "<div class='message-content'><h1>해당하는 정보가 없습니다.</h1></div>";
+    let currentIndex = 0;
+    const messages = [
+      {
+        title: '미니',
+        content: "<div class='message-content grid-container'>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 정보 안내문 1</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 정보 안내문 2</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 정보 안내문 3</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 정보 안내문 4</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 정보 안내문 5</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 정보 안내문 6</div>"+
+                  "</div>"
+      },
+      {
+        title: '미니인턴',
+        content: "<div class='message-content grid-container'>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 1</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 2</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 3</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 4</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 5</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 6</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 7</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 8</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 소개 9</div>"+
+                  "</div>"
+      },
+      {
+        title: '스킬업',
+        content: "<div class='message-content grid-container'>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 1</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 2</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 3</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 4</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 5</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 6</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 7</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 8</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 스킬 강의 9</div>"+
+                  "</div>"
+      },
+      {
+        title: 'M클래스',
+        content: "<div class='message-content grid-container'>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 1</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 2</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 3</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 4</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 5</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 6</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 7</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 8</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 강의 9</div>"+
+                  "</div>"
+      },
+      {
+        title: '채용관',
+        content: "<div class='message-content grid-container'>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 1</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 2</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 3</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 4</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 5</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 6</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 7</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 8</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 채용 희망 기업 9</div>"+
+                  "</div>"
+      },
+      {
+        title: '해피폴리오',
+        content: "<div class='message-content grid-container'>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 1</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 2</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 3</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 4</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 5</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 6</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 7</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 8</div>"+
+                    "<div class='grid-item'><i class='fas fa-user-tie'></i> 해피폴리오 창 9</div>"+
+                  "</div>"
       }
-      document.getElementById("message").innerHTML = message;
+    ];
+
+    function showMessage(buttonName) {
+      const message = messages.find(msg => msg.title === buttonName);
+      document.getElementById("message").innerHTML = message.content;
       document.getElementById("message").style.display = "block";
     }
+
+    function nextButton() {
+      currentIndex = (currentIndex + 1) % messages.length;
+      showMessage(messages[currentIndex].title);
+    }
+
+    function prevButton() {
+      currentIndex = (currentIndex - 1 + messages.length) % messages.length;
+      showMessage(messages[currentIndex].title);
+    }
+
+    showMessage(messages[currentIndex].title);
   </script>
 </body>
 </html>
